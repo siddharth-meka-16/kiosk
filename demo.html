@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kiosk Vision AI — Experience the inclusive, AI-guided kiosk demo." />
+  <title>Kiosk Vision AI — Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="demo.css" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+  <div id="kiosk-idle-screen" style="position: fixed; inset: 0; z-index: 10000; background: linear-gradient(135deg, #EEF2FF 0%, #E0F2FE 50%, #F3E8FF 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: opacity 0.5s ease;">
+    <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent 60%); filter: blur(60px);"></div>
+    
+    <h1 style="font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); color: #1E293B; margin-bottom: 20px; z-index: 1; letter-spacing: -0.04em; font-weight: 800;">Touch anywhere to start</h1>
+    <p style="color: #64748B; font-size: 1.2rem; z-index: 1; letter-spacing: 0.1em; text-transform: uppercase;">Kiosk Vision AI</p>
+  </div>
+
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
+
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <a href="index.html" class="topbar-logo" aria-label="Back to home">
+        <span class="logo-icon" aria-hidden="true">◈</span>
+        <span>Kiosk<span class="logo-accent">Vision</span> AI</span>
+      </a>
+      <div class="topbar-state" id="state-breadcrumb" aria-live="polite">
+        <span class="state-step active" data-step="mode">Mode</span>
+        <span class="state-sep" aria-hidden="true">→</span>
+        <span class="state-step" data-step="menu">Menu</span>
+        <span class="state-sep" aria-hidden="true">→</span>
+        <span class="state-step" data-step="cart">Cart</span>
+        <span class="state-sep" aria-hidden="true">→</span>
+        <span class="state-step" data-step="payment">Payment</span>
+        <span class="state-sep" aria-hidden="true">→</span>
+        <span class="state-step" data-step="success">Done</span>
+      </div>
+      <a href="index.html" class="topbar-back">← Back to home</a>
+    </div>
+  </header>
+
+  <main class="screen screen-mode-centered" id="screen-mode" aria-labelledby="mode-title">
+
+    <div class="mode-bg-glow" aria-hidden="true"></div>
+
+    <div class="mode-page-wrap">
+
+
+
+      <header class="mode-page-header animate-up" style="--d:0.08s">
+        <div class="screen-label">Step 1 of 5</div>
+        <h1 id="mode-title">How would you like to interact<br/>with this kiosk today?</h1>
+        <p class="screen-subtext">Choose your experience mode. The interface will adapt instantly.</p>
+      </header>
+
+      <div class="mode-grid" role="radiogroup" aria-labelledby="mode-title">
+
+        <button
+          class="mode-card animate-up"
+          id="mode-visually-impaired"
+          role="radio"
+          aria-checked="false"
+          data-mode="visually_impaired"
+          style="--d:0.18s; --card-color: #7c6dff; --card-dim: rgba(124,109,255,0.12); --card-border: rgba(124,109,255,0.24);"
+          aria-label="Visually Impaired — High contrast, large text, descriptive AI guidance"
+        >
+          <div class="mode-card-glow" aria-hidden="true"></div>
+          <div class="mode-card-shimmer" aria-hidden="true"></div>
+
+          <div class="mode-card-emoji" aria-hidden="true">👁️</div>
+
+          <div class="mode-card-icon-badge mode-badge-violet" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <ellipse cx="16" cy="16" rx="13" ry="9"/>
+              <circle cx="16" cy="16" r="4"/>
+              <circle cx="16" cy="16" r="1.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+
+          <div class="mode-card-body">
+            <h2 class="mode-card-title">Visually Impaired</h2>
+            <p class="mode-card-desc">High-contrast interface with enlarged text and descriptive AI narration at every step.</p>
+          </div>
+
+          <div class="mode-card-tags">
+            <span class="mode-tag">Large Text</span>
+            <span class="mode-tag">High Contrast</span>
+            <span class="mode-tag">AI Narration</span>
+          </div>
+
+          <div class="mode-card-check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+        </button>
+
+        <button
+          class="mode-card animate-up"
+          id="mode-hearing-impaired"
+          role="radio"
+          aria-checked="false"
+          data-mode="hearing_impaired"
+          style="--d:0.26s; --card-color: #3ecfcf; --card-dim: rgba(62,207,207,0.1); --card-border: rgba(62,207,207,0.22);"
+          aria-label="Hearing Impaired — Visual-first layout, bold text cues, no audio dependency"
+        >
+          <div class="mode-card-glow" aria-hidden="true"></div>
+          <div class="mode-card-shimmer" aria-hidden="true"></div>
+
+          <div class="mode-card-emoji" aria-hidden="true">👂</div>
+
+          <div class="mode-card-icon-badge mode-badge-cyan" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <rect x="4" y="7"  width="24" height="4" rx="2"/>
+              <rect x="4" y="15" width="18" height="4" rx="2"/>
+              <rect x="4" y="23" width="12" height="4" rx="2"/>
+            </svg>
+          </div>
+
+          <div class="mode-card-body">
+            <h2 class="mode-card-title">Hearing Impaired</h2>
+            <p class="mode-card-desc">Visual-first layout with bold on-screen cues, prominent alerts, and no audio dependency.</p>
+          </div>
+
+          <div class="mode-card-tags">
+            <span class="mode-tag">Visual Cues</span>
+            <span class="mode-tag">Text First</span>
+            <span class="mode-tag">Clear Alerts</span>
+          </div>
+
+          <div class="mode-card-check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+        </button>
+
+        <button
+          class="mode-card animate-up"
+          id="mode-beginner"
+          role="radio"
+          aria-checked="false"
+          data-mode="beginner"
+          style="--d:0.34s; --card-color: #ffb347; --card-dim: rgba(255,179,71,0.1); --card-border: rgba(255,179,71,0.22);"
+          aria-label="Beginner — Step-by-step guidance, large buttons, patient AI instructions"
+        >
+          <div class="mode-card-glow" aria-hidden="true"></div>
+          <div class="mode-card-shimmer" aria-hidden="true"></div>
+
+          <div class="mode-card-emoji" aria-hidden="true">🧓</div>
+
+          <div class="mode-card-icon-badge mode-badge-amber" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="16" cy="10" r="5"/>
+              <path d="M6 28c0-5.523 4.477-10 10-10s10 4.477 10 10"/>
+            </svg>
+          </div>
+
+          <div class="mode-card-body">
+            <h2 class="mode-card-title">Beginner</h2>
+            <p class="mode-card-desc">Friendly step-by-step instructions with large buttons and a patient AI guide for new users.</p>
+          </div>
+
+          <div class="mode-card-tags">
+            <span class="mode-tag">Step-by-Step</span>
+            <span class="mode-tag">Large Buttons</span>
+            <span class="mode-tag">Patient AI</span>
+          </div>
+
+          <div class="mode-card-check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+        </button>
+
+        <button
+          class="mode-card animate-up"
+          id="mode-voice-control"
+          role="radio"
+          aria-checked="false"
+          data-mode="voice_control"
+          style="--d:0.42s; --card-color: #ff6b6b; --card-dim: rgba(255,107,107,0.12); --card-border: rgba(255,107,107,0.24);"
+          aria-label="Voice Control — Hands-free navigation using simple spoken commands"
+        >
+          <div class="mode-card-glow" aria-hidden="true"></div>
+          <div class="mode-card-shimmer" aria-hidden="true"></div>
+
+          <div class="mode-card-emoji" aria-hidden="true">🗣️</div>
+
+          <div class="mode-card-icon-badge" style="color: #ff6b6b;" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M16 4a4 4 0 00-4 4v8a4 4 0 008 0V8a4 4 0 00-4-4zM24 14v2a8 8 0 01-16 0v-2M16 24.5v4M11 28.5h10"/>
+            </svg>
+          </div>
+
+          <div class="mode-card-body">
+            <h2 class="mode-card-title">Voice Control</h2>
+            <p class="mode-card-desc">Navigate the kiosk completely hands-free using simple spoken voice commands.</p>
+          </div>
+
+          <div class="mode-card-tags">
+            <span class="mode-tag">Hands-Free</span>
+            <span class="mode-tag">Voice Active</span>
+            <span class="mode-tag">Mic Access</span>
+          </div>
+
+          <div class="mode-card-check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+        </button>
+
+      </div>
+
+      <div class="mode-footer animate-up" style="--d:0.50s">
+        <button class="btn-continue btn-large" id="btn-continue-mode" disabled aria-disabled="true">
+          <span>Continue to Menu</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <p class="mode-footer-note" id="mode-footer-note">Select a mode above to continue</p>
+      </div>
+
+    </div>
+  </main>
+
+  <main class="screen hidden" id="screen-menu" aria-labelledby="menu-title">
+    <div class="screen-inner menu-layout">
+
+      <div class="menu-panel">
+
+        <div class="menu-panel-header animate-up" style="--d:0.05s">
+          <div class="screen-label">Step 2 of 5</div>
+          <h1 id="menu-title">What would you like today?</h1>
+          <p class="screen-subtext" id="menu-subtext">Tap <strong>Add</strong> on any item to build your order.</p>
+        </div>
+
+        <div class="menu-tabs animate-up" style="--d:0.1s" role="tablist" aria-label="Menu categories">
+          <button class="menu-tab active" role="tab" aria-selected="true" data-cat="all">🍽️ All</button>
+          <button class="menu-tab" role="tab" aria-selected="false" data-cat="mains">🥘 Mains</button>
+          <button class="menu-tab" role="tab" aria-selected="false" data-cat="sides">🥗 Sides</button>
+          <button class="menu-tab" role="tab" aria-selected="false" data-cat="drinks">🥤 Drinks</button>
+        </div>
+
+        <div class="food-grid animate-up" id="menu-items" style="--d:0.18s" role="list" aria-label="Menu items">
+
+          <article class="food-card" data-id="pizza" data-cat="mains" data-name="Margherita Pizza" data-price="12.00" data-emoji="🍕" role="listitem">
+            <div class="food-card-img" aria-hidden="true">🍕</div>
+            <div class="food-card-body">
+              <h3 class="food-card-name">Margherita Pizza</h3>
+              <p class="food-card-desc">Classic tomato base, fresh mozzarella, basil</p>
+              <div class="food-card-footer">
+                <span class="food-card-price">$12.00</span>
+                <button class="btn-add" id="add-pizza" aria-label="Add Margherita Pizza to order">
+                  <span class="btn-add-inner btn-add-default">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>
+                    Add
+                  </span>
+                  <span class="btn-add-inner btn-add-done">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 10l4 4 8-8"/></svg>
+                    Added
+                  </span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="food-card" data-id="burger" data-cat="mains" data-name="Grilled Burger" data-price="10.00" data-emoji="🍔" role="listitem">
+            <div class="food-card-img" aria-hidden="true">🍔</div>
+            <div class="food-card-body">
+              <h3 class="food-card-name">Grilled Burger</h3>
+              <p class="food-card-desc">Beef patty, cheddar, lettuce, tomato relish</p>
+              <div class="food-card-footer">
+                <span class="food-card-price">$10.00</span>
+                <button class="btn-add" id="add-burger" aria-label="Add Grilled Burger to order">
+                  <span class="btn-add-inner btn-add-default">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>
+                    Add
+                  </span>
+                  <span class="btn-add-inner btn-add-done">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 10l4 4 8-8"/></svg>
+                    Added
+                  </span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="food-card" data-id="pasta" data-cat="mains" data-name="Creamy Pasta" data-price="11.00" data-emoji="🍝" role="listitem">
+            <div class="food-card-img" aria-hidden="true">🍝</div>
+            <div class="food-card-body">
+              <h3 class="food-card-name">Creamy Pasta</h3>
+              <p class="food-card-desc">Penne in rich alfredo cream sauce</p>
+              <div class="food-card-footer">
+                <span class="food-card-price">$11.00</span>
+                <button class="btn-add" id="add-pasta" aria-label="Add Creamy Pasta to order">
+                  <span class="btn-add-inner btn-add-default">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>
+                    Add
+                  </span>
+                  <span class="btn-add-inner btn-add-done">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 10l4 4 8-8"/></svg>
+                    Added
+                  </span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="food-card" data-id="salad" data-cat="sides" data-name="Caesar Salad" data-price="8.00" data-emoji="🥗" role="listitem">
+            <div class="food-card-img" aria-hidden="true">🥗</div>
+            <div class="food-card-body">
+              <h3 class="food-card-name">Caesar Salad</h3>
+              <p class="food-card-desc">Romaine, croutons, parmesan, caesar dressing</p>
+              <div class="food-card-footer">
+                <span class="food-card-price">$8.00</span>
+                <button class="btn-add" id="add-salad" aria-label="Add Caesar Salad to order">
+                  <span class="btn-add-inner btn-add-default">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>
+                    Add
+                  </span>
+                  <span class="btn-add-inner btn-add-done">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 10l4 4 8-8"/></svg>
+                    Added
+                  </span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="food-card" data-id="fries" data-cat="sides" data-name="Crispy Fries" data-price="5.00" data-emoji="🍟" role="listitem">
+            <div class="food-card-img" aria-hidden="true">🍟</div>
+            <div class="food-card-body">
+              <h3 class="food-card-name">Crispy Fries</h3>
+              <p class="food-card-desc">Golden, salted, perfectly crisp</p>
+              <div class="food-card-footer">
+                <span class="food-card-price">$5.00</span>
+                <button class="btn-add" id="add-fries" aria-label="Add Crispy Fries to order">
+                  <span class="btn-add-inner btn-add-default">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>
+                    Add
+                  </span>
+                  <span class="btn-add-inner btn-add-done">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 10l4 4 8-8"/></svg>
+                    Added
+                  </span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="food-card" data-id="juice" data-cat="drinks" data-name="Fresh Orange Juice" data-price="4.00" data-emoji="🍊" role="listitem">
+            <div class="food-card-img" aria-hidden="true">🍊</div>
+            <div class="food-card-body">
+              <h3 class="food-card-name">Orange Juice</h3>
+              <p class="food-card-desc">Freshly squeezed, chilled, pulp-free</p>
+              <div class="food-card-footer">
+                <span class="food-card-price">$4.00</span>
+                <button class="btn-add" id="add-juice" aria-label="Add Fresh Orange Juice to order">
+                  <span class="btn-add-inner btn-add-default">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>
+                    Add
+                  </span>
+                  <span class="btn-add-inner btn-add-done">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 10l4 4 8-8"/></svg>
+                    Added
+                  </span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="food-card" data-id="water" data-cat="drinks" data-name="Sparkling Water" data-price="3.00" data-emoji="💧" role="listitem">
+            <div class="food-card-img" aria-hidden="true">💧</div>
+            <div class="food-card-body">
+              <h3 class="food-card-name">Sparkling Water</h3>
+              <p class="food-card-desc">Chilled, naturally sparkling mineral water</p>
+              <div class="food-card-footer">
+                <span class="food-card-price">$3.00</span>
+                <button class="btn-add" id="add-water" aria-label="Add Sparkling Water to order">
+                  <span class="btn-add-inner btn-add-default">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>
+                    Add
+                  </span>
+                  <span class="btn-add-inner btn-add-done">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 10l4 4 8-8"/></svg>
+                    Added
+                  </span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <div class="menu-sidebar">
+
+
+        <div class="cart-panel glass-card animate-up" style="--d:0.16s" aria-live="polite" aria-label="Your order">
+          <div class="cart-header">
+            <h2 class="cart-title">Your Order</h2>
+            <span class="cart-count" id="cart-count" aria-label="0 items in cart">0 items</span>
+          </div>
+          <div class="cart-items" id="cart-items">
+            <p class="cart-empty" id="cart-empty">No items yet — tap Add on any dish!</p>
+          </div>
+          <div class="cart-total-row" id="cart-total-row" hidden>
+            <span class="cart-total-label">Total</span>
+            <span class="cart-total-val" id="cart-total">$0.00</span>
+          </div>
+          <button class="btn-continue btn-cart-go" id="btn-go-cart" disabled aria-disabled="true">
+            <span>Review Cart</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <main class="screen hidden screen-mode-centered" id="screen-cart" aria-labelledby="cart-review-title">
+    <div class="mode-bg-glow"></div>
+    <div class="mode-page-wrap">
+      
+
+      <header class="mode-page-header animate-up" style="--d:0.1s">
+        <div class="screen-label">Step 3 of 5</div>
+        <h1 id="cart-review-title">Review your order</h1>
+      </header>
+
+      <div class="cart-review-box glass-card animate-up" style="--d:0.15s">
+        <div class="cart-review-list" id="cart-review-list" role="list" aria-label="Items in your cart">
+          </div>
+        <div class="cart-review-summary">
+          <div class="cart-review-total-row">
+            <span>Total to pay</span>
+            <span id="cart-review-total" class="cart-review-total-val">$0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cart-actions animate-up" style="--d:0.2s">
+        <button class="btn-back" id="btn-back-menu">
+          <svg viewBox="0 0 24 24" fill="none" class="icon-back"><path d="M19 12H5m7 7l-7-7 7-7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back to Menu
+        </button>
+        <button class="btn-continue btn-large btn-pay" id="btn-proceed-payment">
+          <span>Proceed to Payment</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <main class="screen hidden" id="screen-payment" aria-labelledby="payment-title">
+    <div class="screen-inner menu-layout">
+
+      <div class="menu-panel">
+
+        <header class="menu-panel-header animate-up" style="--d:0.05s">
+          <div class="screen-label">Step 4 of 5</div>
+          <h1 id="payment-title">How would you like to pay?</h1>
+          <p class="screen-subtext">Select a payment method to complete your secure transaction.</p>
+        </header>
+
+        <div class="payment-options animate-up" style="--d:0.15s" role="radiogroup" aria-label="Payment Methods">
+          
+          <button class="payment-card" role="radio" aria-checked="false" data-method="razorpay">
+            <div class="payment-icon" aria-hidden="true">💳</div>
+            <div class="payment-info">
+              <h3 class="payment-name">Pay with Razorpay</h3>
+              <p class="payment-desc">Card, UPI, Netbanking & Wallets via Razorpay secure checkout.</p>
+            </div>
+            <div class="payment-badge">Recommended</div>
+          </button>
+
+          <button class="payment-card" role="radio" aria-checked="false" data-method="qr">
+            <div class="payment-icon" aria-hidden="true">📱</div>
+            <div class="payment-info">
+              <h3 class="payment-name">QR Code Payment</h3>
+              <p class="payment-desc">Scan using any UPI app — Google Pay, PhonePe, Paytm.</p>
+            </div>
+          </button>
+
+          <button class="payment-card" role="radio" aria-checked="false" data-method="cash">
+            <div class="payment-icon" aria-hidden="true">💵</div>
+            <div class="payment-info">
+              <h3 class="payment-name">Cash at Counter</h3>
+              <p class="payment-desc">Generate ticket and pay cash directly at the counter.</p>
+            </div>
+          </button>
+
+        </div>
+
+        <!-- Payment Detail Panels -->
+        <div class="payment-detail-panels animate-up" style="--d:0.25s">
+
+          <!-- Razorpay Panel -->
+          <div class="payment-detail-panel glass-card" id="panel-razorpay" style="display:none">
+            <div class="panel-detail-header">
+              <span class="panel-detail-icon">🔒</span>
+              <h3>Razorpay Secure Checkout</h3>
+            </div>
+            <p class="panel-detail-desc">Click the button below to open the Razorpay payment gateway. You can pay via Card, UPI, Netbanking, or Wallet.</p>
+            <button class="btn-razorpay-pay" id="btn-razorpay-pay">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              <span>Pay with Razorpay</span>
+            </button>
+            <p class="panel-detail-note">Secured by Razorpay · 256-bit SSL Encryption</p>
+          </div>
+
+          <!-- QR Panel -->
+          <div class="payment-detail-panel glass-card" id="panel-qr" style="display:none">
+            <div class="panel-detail-header">
+              <span class="panel-detail-icon">📱</span>
+              <h3>Scan & Pay via UPI</h3>
+            </div>
+            <div class="qr-wrapper">
+              <div class="qr-container" id="qr-container"></div>
+              <p class="qr-instruction">Scan using any UPI app</p>
+              <div class="qr-apps">
+                <span class="qr-app-badge">Google Pay</span>
+                <span class="qr-app-badge">PhonePe</span>
+                <span class="qr-app-badge">Paytm</span>
+                <span class="qr-app-badge">BHIM</span>
+              </div>
+            </div>
+            <button class="btn-qr-paid" id="btn-qr-paid">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:20px;height:20px;"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>I have paid</span>
+            </button>
+          </div>
+
+          <!-- Cash Panel -->
+          <div class="payment-detail-panel glass-card" id="panel-cash" style="display:none">
+            <div class="panel-detail-header">
+              <span class="panel-detail-icon">🧾</span>
+              <h3>Cash Payment</h3>
+            </div>
+            <p class="panel-detail-desc">A token will be generated for your order. Please pay at the counter when collecting your food.</p>
+            <div class="cash-token-display" id="cash-token-display">
+              <span class="cash-token-label">Your Token</span>
+              <span class="cash-token-number" id="cash-token-number">#---</span>
+            </div>
+            <button class="btn-cash-confirm" id="btn-cash-confirm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:20px;height:20px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <span>Confirm Cash Payment</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="menu-sidebar">
+
+
+        <div class="cart-panel glass-card animate-up" style="--d:0.16s">
+          <div class="cart-header" style="margin-bottom: 5px;">
+            <h2 class="cart-title">Total Due</h2>
+          </div>
+          <div class="payment-summary-total" id="payment-summary-total">$0.00</div>
+          
+          <div class="payment-selected-badge" id="payment-selected-badge" hidden>
+            <span class="payment-selected-icon" id="payment-selected-icon">💳</span>
+            <span class="payment-selected-label" id="payment-selected-label">Razorpay</span>
+          </div>
+
+          <button class="btn-cancel-pay" id="btn-payment-back">← Back to Cart</button>
+        </div>
+
+        <!-- Recent Orders Panel -->
+        <div class="cart-panel glass-card animate-up" style="--d:0.26s" id="recent-orders-panel">
+          <div class="cart-header">
+            <h2 class="cart-title">Recent Orders</h2>
+          </div>
+          <div class="recent-orders-list" id="recent-orders-list">
+            <p class="cart-empty" id="recent-orders-empty">Loading recent orders...</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <main class="screen hidden screen-mode-centered" id="screen-success" aria-labelledby="success-title">
+    <div class="mode-bg-glow" style="background: radial-gradient(circle at center, rgba(62,207,207,0.15) 0%, transparent 60%);"></div>
+    <div class="mode-page-wrap" style="align-items: center; text-align: center;">
+
+
+
+      <div class="success-container animate-up" style="--d:0.15s">
+        
+        <div class="success-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 100 100" class="success-checkmark">
+            <circle class="success-circle" cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="4"/>
+            <path class="success-check" d="M30 52 l14 14 l28 -28" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <h1 id="success-title" class="success-hero-title">Order Successful!</h1>
+        <p class="success-subtitle">Your order number is <strong class="text-cyan">#<span id="order-number-val">104</span></strong>.</p>
+        
+        <div class="success-details glass-card">
+          <p>You paid <strong><span id="success-total-paid">$0.00</span></strong> via <strong id="success-method-paid">Card</strong>.</p>
+          <p class="success-instructions" id="success-instructions-text">Please collect your receipt and wait for your number to be called.</p>
+        </div>
+
+        <div class="success-receipt glass-card" id="success-receipt">
+          <div class="receipt-header">
+            <span class="receipt-logo">◈</span>
+            <span class="receipt-brand">KioskVision AI</span>
+          </div>
+          <div class="receipt-items" id="receipt-items-list"></div>
+          <div class="receipt-divider"></div>
+          <div class="receipt-footer">
+            <span>Order saved to cloud</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+        </div>
+
+        <button class="btn-continue btn-large" id="btn-start-over" style="margin-top: 24px;">
+          <span>Start New Order</span>
+        </button>
+
+      </div>
+
+    </div>
+  </main>
+
+  <div class="floating-ai minimized" id="floating-ai">
+    <button class="ai-orb-btn" id="ai-orb-btn" aria-label="Open AI Assistant">
+      <div class="ai-orb-glow" aria-hidden="true"></div>
+      <div class="ai-waveform" id="ai-orb-waveform" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <span class="ai-orb-icon">◈</span>
+    </button>
+
+    <div class="ai-panel-chat glass-card" id="ai-panel-chat" hidden>
+      <div class="ai-chat-header">
+        <div class="ai-avatar" aria-hidden="true">◈</div>
+        <div class="ai-identity">
+          <span class="ai-name">Voice Assistant</span>
+          <span class="ai-status" id="ai-chat-status"><span class="ai-dot"></span>Ready</span>
+        </div>
+        <button class="ai-close-btn" id="ai-close-btn" aria-label="Close Assistant">×</button>
+      </div>
+
+      <div class="ai-chat-body" id="ai-chat-body" role="log" aria-live="polite">
+        <div class="ai-msg ai-msg-system">Hi! I'm here to help. Tap the mic to speak or type below.</div>
+      </div>
+
+      <div class="ai-chat-footer">
+        <input type="text" class="ai-chat-input" id="ai-chat-input" placeholder="Ask me anything..." aria-label="Type your message" />
+        <button class="ai-mic-btn" id="ai-mic-btn" aria-label="Use Microphone">
+          <svg viewBox="0 0 24 24" fill="none" class="icon-mic"><path d="M12 2a3 3 0 00-3 3v7a3 3 0 006 0V5a3 3 0 00-3-3zM19 10v2a7 7 0 01-14 0v-2M12 18.5v3M8 21.5h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="ai-send-btn" id="ai-send-btn" aria-label="Send Message" disabled>
+          <svg viewBox="0 0 24 24" fill="none" class="icon-send"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="demo.js"></script>
+  <video id="webcam-hidden" autoplay playsinline style="opacity: 0.01; position: absolute; width: 1px; height: 1px; pointer-events: none; z-index: -1;"></video>
+</body>
+</html>

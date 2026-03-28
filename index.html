@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kiosk Vision AI — An AI-powered accessibility layer that transforms any self-service kiosk into an inclusive, guided, and frictionless experience for everyone." />
+  <title>Kiosk Vision AI — Inclusive Kiosk Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ─── Background Layers ─── -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-gradient"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <!-- ─── Navigation ─── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="logo-icon" aria-hidden="true">◈</span>
+        <span class="logo-text">Kiosk<span class="logo-accent">Vision</span> AI</span>
+      </div>
+      <div class="nav-links">
+        <a href="#problem" class="nav-link">Problem</a>
+        <a href="#solution" class="nav-link">Solution</a>
+        <a href="#preview" class="nav-link">Preview</a>
+        <a href="demo.html" class="btn-nav" id="nav-cta">Start Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── HERO SECTION ─── -->
+  <section class="hero" id="hero" aria-labelledby="hero-headline">
+    <div class="hero-inner">
+
+      <div class="hero-badge animate-fade-up" style="--delay: 0s">
+        <span class="badge-dot"></span>
+        <span>AI-Powered Accessibility</span>
+      </div>
+
+      <h1 class="hero-headline animate-fade-up" id="hero-headline" style="--delay: 0.1s">
+        <span class="hero-headline-line1">AI Accessibility Layer</span><br />
+        <span class="gradient-text">for Smart Kiosks</span>
+      </h1>
+
+      <p class="hero-subtext animate-fade-up" style="--delay: 0.2s">
+        Kiosk Vision AI transforms any self-service kiosk into an inclusive, guided experience — empowering visually impaired, hearing impaired, and first-time users to order with full confidence and independence.
+      </p>
+
+      <div class="hero-cta animate-fade-up" style="--delay: 0.3s">
+        <a href="demo.html" class="btn-primary" id="hero-start-demo">
+          <span>Start Demo</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <span class="hero-cta-note">No setup · No login · Under 2 minutes</span>
+      </div>
+
+      <div class="hero-stats animate-fade-up" style="--delay: 0.45s">
+        <div class="stat-pill">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Accessibility Modes</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-pill">
+          <span class="stat-num">&lt;2min</span>
+          <span class="stat-label">Full Order Flow</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-pill">
+          <span class="stat-num">AI</span>
+          <span class="stat-label">Real-time Guidance</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-hint animate-fade-up" style="--delay: 0.7s" aria-hidden="true">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ─── PROBLEM SECTION ─── -->
+  <section class="section problem-section" id="problem" aria-labelledby="problem-headline">
+    <div class="section-inner">
+
+      <div class="section-label animate-on-scroll">The Problem</div>
+      <h2 class="section-headline animate-on-scroll" id="problem-headline">
+        Kiosks Were Not Built<br /><span class="gradient-text">for Everyone</span>
+      </h2>
+      <p class="section-subtext animate-on-scroll">
+        Self-service kiosks power airports, restaurants, and retail — but they quietly exclude millions of users.
+      </p>
+
+      <div class="problem-grid">
+
+        <div class="glass-card problem-card animate-on-scroll" style="--card-delay: 0s">
+          <div class="card-icon-wrap problem-icon-1" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </div>
+          <h3>Visually Complex</h3>
+          <p>Dense menus with tiny text overwhelm users with visual impairments or low digital literacy.</p>
+        </div>
+
+        <div class="glass-card problem-card animate-on-scroll" style="--card-delay: 0.1s">
+          <div class="card-icon-wrap problem-icon-2" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="12" r="10"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <h3>Zero Guidance</h3>
+          <p>No step-by-step help. Users are left alone to navigate confusing interfaces under pressure.</p>
+        </div>
+
+        <div class="glass-card problem-card animate-on-scroll" style="--card-delay: 0.2s">
+          <div class="card-icon-wrap problem-icon-3" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Not Inclusive</h3>
+          <p>Hearing impaired, elderly, and first-time users face silent barriers with no fallback support.</p>
+        </div>
+
+        <div class="glass-card problem-card animate-on-scroll" style="--card-delay: 0.3s">
+          <div class="card-icon-wrap problem-icon-4" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <h3>Payment Anxiety</h3>
+          <p>Confusing payment flows cause abandoned transactions — especially for unfamiliar users.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SOLUTION SECTION ─── -->
+  <section class="section solution-section" id="solution" aria-labelledby="solution-headline">
+    <div class="section-inner">
+
+      <div class="section-label animate-on-scroll">The Solution</div>
+      <h2 class="section-headline animate-on-scroll" id="solution-headline">
+        Adaptive AI That Guides<br /><span class="gradient-text">Every User, Every Step</span>
+      </h2>
+
+      <div class="solution-layout">
+
+        <div class="solution-features">
+
+          <div class="sol-feature animate-on-scroll" style="--card-delay: 0s">
+            <div class="sol-feature-num">01</div>
+            <div class="sol-feature-body">
+              <h3>Select Your Mode</h3>
+              <p>Users choose their accessibility profile in one tap — Visually Impaired, Hearing Impaired, or Beginner.</p>
+            </div>
+          </div>
+
+          <div class="sol-feature animate-on-scroll" style="--card-delay: 0.1s">
+            <div class="sol-feature-num">02</div>
+            <div class="sol-feature-body">
+              <h3>AI Understands Context</h3>
+              <p>The AI assistant tracks the current screen state and delivers precise, short instructions — never overwhelming.</p>
+            </div>
+          </div>
+
+          <div class="sol-feature animate-on-scroll" style="--card-delay: 0.2s">
+            <div class="sol-feature-num">03</div>
+            <div class="sol-feature-body">
+              <h3>Guided to Completion</h3>
+              <p>From browsing the menu to confirming payment, the AI walks the user through every action confidently.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="solution-visual animate-on-scroll glass-card" style="--card-delay: 0.15s" aria-label="Illustration of AI guidance modes">
+          <div class="mode-cards">
+            <div class="mode-chip mode-visual">
+              <span class="mode-chip-icon" aria-hidden="true">👁</span>
+              <div>
+                <div class="mode-chip-title">Visually Impaired</div>
+                <div class="mode-chip-desc">Descriptive audio guidance</div>
+              </div>
+            </div>
+            <div class="mode-chip mode-hearing">
+              <span class="mode-chip-icon" aria-hidden="true">✋</span>
+              <div>
+                <div class="mode-chip-title">Hearing Impaired</div>
+                <div class="mode-chip-desc">Bold visual text cues</div>
+              </div>
+            </div>
+            <div class="mode-chip mode-beginner">
+              <span class="mode-chip-icon" aria-hidden="true">🌱</span>
+              <div>
+                <div class="mode-chip-title">Beginner</div>
+                <div class="mode-chip-desc">Simple step-by-step flow</div>
+              </div>
+            </div>
+          </div>
+          <div class="ai-chat-preview" aria-label="AI assistant preview">
+            <div class="chat-bubble ai-bubble">
+              <span class="chat-avatar" aria-hidden="true">◈</span>
+              <span>"Tap any item on the menu to add it to your order. I'm here to help!"</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── VISUAL PREVIEW SECTION ─── -->
+  <section class="section preview-section" id="preview" aria-labelledby="preview-headline">
+    <div class="section-inner">
+
+      <div class="section-label animate-on-scroll">Live Preview</div>
+      <h2 class="section-headline animate-on-scroll" id="preview-headline">
+        See It In Action
+      </h2>
+      <p class="section-subtext animate-on-scroll">
+        A simplified kiosk interface with AI-powered guidance — designed for everyone.
+      </p>
+
+      <div class="kiosk-frame-wrap animate-on-scroll">
+        <div class="kiosk-frame" role="img" aria-label="Mock kiosk interface with AI assistant panel">
+
+          <!-- Mock Kiosk Header -->
+          <div class="kiosk-header">
+            <div class="kiosk-brand">
+              <span class="kiosk-brand-icon" aria-hidden="true">◈</span>
+              <span>KioskVision AI</span>
+            </div>
+            <div class="kiosk-mode-badge">Visually Impaired Mode</div>
+          </div>
+
+          <!-- Mock Menu Items -->
+          <div class="kiosk-body">
+            <div class="kiosk-menu">
+              <div class="kiosk-item kiosk-item-selected" aria-label="Margherita Pizza, $12, selected">
+                <div class="kiosk-item-emoji" aria-hidden="true">🍕</div>
+                <div class="kiosk-item-info">
+                  <div class="kiosk-item-name">Margherita Pizza</div>
+                  <div class="kiosk-item-price">$12.00</div>
+                </div>
+                <div class="kiosk-item-check" aria-hidden="true">✓</div>
+              </div>
+              <div class="kiosk-item" aria-label="Caesar Salad, $8">
+                <div class="kiosk-item-emoji" aria-hidden="true">🥗</div>
+                <div class="kiosk-item-info">
+                  <div class="kiosk-item-name">Caesar Salad</div>
+                  <div class="kiosk-item-price">$8.00</div>
+                </div>
+              </div>
+              <div class="kiosk-item" aria-label="Sparkling Water, $3">
+                <div class="kiosk-item-emoji" aria-hidden="true">💧</div>
+                <div class="kiosk-item-info">
+                  <div class="kiosk-item-name">Sparkling Water</div>
+                  <div class="kiosk-item-price">$3.00</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI Panel -->
+            <div class="kiosk-ai-panel">
+              <div class="kiosk-ai-header">
+                <span class="kiosk-ai-dot" aria-hidden="true"></span>
+                <span>AI Assistant</span>
+              </div>
+              <div class="kiosk-ai-message">
+                "Great choice! Margherita Pizza is selected. Tap <strong>Add to Cart</strong> to continue, or keep browsing."
+              </div>
+              <button class="kiosk-ai-btn" aria-label="Add Margherita Pizza to cart">Add to Cart →</button>
+            </div>
+          </div>
+
+          <!-- Kiosk Glow -->
+          <div class="kiosk-glow" aria-hidden="true"></div>
+        </div>
+
+        <!-- Frame Decorations -->
+        <div class="frame-deco frame-deco-tl" aria-hidden="true"></div>
+        <div class="frame-deco frame-deco-br" aria-hidden="true"></div>
+      </div>
+
+      <div class="preview-cta animate-on-scroll">
+        <a href="demo.html" class="btn-primary" id="preview-start-demo">
+          <span>Experience the Full Demo</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span class="logo-icon" aria-hidden="true">◈</span>
+        <span class="logo-text">Kiosk<span class="logo-accent">Vision</span> AI</span>
+      </div>
+      <p class="footer-tagline">Inclusive intelligence. Every kiosk. Every user.</p>
+      <p class="footer-copy">Built with purpose at Hackathon 2026</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -148,7 +148,7 @@ Supabase (Database)
 1. Clone the repo
 
 ```
-git clone https://github.com/your-username/kiosk-vision-ai.git
+git clone [https://github.com/your-username/kiosk-vision-ai.git](https://github.com/siddharth-meka-16/kiosk.git)
 ```
 
 2. Add `.env` file

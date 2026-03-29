@@ -35,6 +35,14 @@ Modern self-service kiosks (restaurants, retail, pharmacies) are:
 * Voice input + voice output
 * Real-time guidance for users
 
+ 
+* ### ✋ Gesture-Based Interaction (Experimental)
+
+- Uses Google APIs for gesture detection
+- Enables touchless interaction with kiosk
+- Designed for users with limited mobility
+- Enhances accessibility beyond voice and UI
+
 ### ♿ Accessibility Modes
 
 * 👁️ Visually Impaired
@@ -134,17 +142,6 @@ Supabase (Database)
 
 ---
 
-## 🔐 Environment Variables
-
-Create a `.env` file:
-
-```
-SUPABASE_URL=your_project_url
-SUPABASE_ANON_KEY=your_publishable_key
-GEMINI_API_KEY=your_api_key
-```
-
----
 
 ## 🚀 Getting Started
 
@@ -195,6 +192,13 @@ It is an **accessibility layer** that can be applied to:
 * Multi-language voice support
 * Gesture-based navigation
 * Real payment verification
+
+ ## 🔮 Future Improvements
+
+- Advanced gesture recognition (currently basic implementation using Google APIs)
+- Real computer vision-based screen understanding
+- Multi-language voice support
+- Real payment verification
 
 ---
 
